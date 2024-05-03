@@ -1,2 +1,4 @@
-# sql-junior
-i will post small sql related programs here so it's easy to find
+# sql junior
+
+c#:
+  SqlTablePrinter: printer will get any db table as DataTable instance. It keeps SQL types (as it shown in result.png)
