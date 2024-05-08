@@ -10,11 +10,12 @@ namespace SqlHelper
 		
 		private SqlConnection connection;
 
-
-		public SqlTablePrinter(string connectionQuery)
+		/*
+  		* connection must be opened
+  		*/
+		public SqlTablePrinter(SqlConnection connection)
 		{
-			connection = new SqlConnection(connectionQuery);
-			connection.Open();
+			this.connection = connection;
 		}
 
 		public DataTable GetTable(string tableName)
@@ -25,11 +26,6 @@ namespace SqlHelper
 			dataAdapter.Fill(table);
 
 			return table;
-		}
-
-		public void CloseConnection()
-		{
-			connection.Close();
 		}
 
 		public void PrintTable(DataTable table)
@@ -44,18 +40,23 @@ namespace SqlHelper
 			}
 		}
 
+		public void PrintTable(string tableName)
+		{
+			PrintTable(GetTable(tableName));
+		}
+
 		public static void Main(string[] args)
 		{
 			//pass your ssms connection name (DESKTOP-[random chars]\SQLEXPRESS)
 			//initial catalog is your db name
-			SqlTablePrinter printer = new SqlTablePrinter(@"Data Source=DESKTOP-8UOLSK2\SQLEXPRESS;Initial Catalog=kurs3;Integrated Security=True");
+			SqlConnection connection = new SqlConnection (@"Data Source=DESKTOP-8UOLSK2\SQLEXPRESS;Initial Catalog=kurs3;Integrated Security=True");
+			SqlTablePrinter printer = new SqlTablePrinter(connection);
 			
 			//pass the name of the table you want to print
-			DataTable table = printer.GetTable("role");
-			printer.PrintTable(table);
+			printer.PrintTable("role");
 
 			//dont forget to disconnect
-			printer.CloseConnection();
+			connection.Close();
 		}
 
 
