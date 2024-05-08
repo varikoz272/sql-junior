@@ -49,11 +49,6 @@ namespace SqlHelper
 		{
 			new SqlCommand(query, connection).ExecuteNonQuery();
 		}
-
-		public static void Main(String[] args)
-		{
-
-		}
 	}
 
 
