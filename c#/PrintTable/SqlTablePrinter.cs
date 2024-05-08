@@ -7,17 +7,15 @@ namespace SqlHelper
 {
 	public class SqlTablePrinter
 	{
-		
 		private SqlConnection connection;
 
 		/*
-  		* connection must be opened
-  		*/
+		 * Parameter "connnection" should be open with "connection.Open()" to perform queries
+		*/
 		public SqlTablePrinter(SqlConnection connection)
 		{
 			this.connection = connection;
 		}
-
 		public DataTable GetTable(string tableName)
 		{
 			string query = "SELECT * FROM " + tableName;
@@ -26,6 +24,11 @@ namespace SqlHelper
 			dataAdapter.Fill(table);
 
 			return table;
+		}
+		
+		public void PrintTable(string tableName)
+		{
+			PrintTable(GetTable(tableName));
 		}
 
 		public void PrintTable(DataTable table)
@@ -39,12 +42,7 @@ namespace SqlHelper
 				Console.WriteLine("");
 			}
 		}
-
-		public void PrintTable(string tableName)
-		{
-			PrintTable(GetTable(tableName));
-		}
-
+		
 		public static void Main(string[] args)
 		{
 			//pass your ssms connection name (DESKTOP-[random chars]\SQLEXPRESS)
